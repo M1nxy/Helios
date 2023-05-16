@@ -1,11 +1,20 @@
-import { Client } from 'discord.js';
-import { TextCommand } from './command.js';
+import { ApplicationCommandType, Client, ContextMenuCommandBuilder, Routes } from 'discord.js';
+import { UserContextMenuCommand, TextCommand } from './command.js';
 import { Event } from './event.js';
 
 export class Helios extends Client<true> {
   commands: Map<string, TextCommand> = new Map();
+  userContext: Map<string, UserContextMenuCommand> = new Map();
   events: Map<string, Event> = new Map();
   private _prefix = '';
+
+  get prefix() {
+    return this._prefix;
+  }
+
+  set prefix(prefix: string) {
+    this._prefix = prefix;
+  }
 
   bindEvents() {
     for (const event of this.events.values()) {
@@ -17,11 +26,23 @@ export class Helios extends Client<true> {
     }
   }
 
-  get prefix() {
-    return this._prefix;
-  }
+  async deployCommands(guildId: string) {
+    const userContext = [...this.userContext.values()].map((cmd) => {
+      return new ContextMenuCommandBuilder().setName(cmd.name).setType(ApplicationCommandType.User).toJSON();
+    });
 
-  set prefix(prefix: string) {
-    this._prefix = prefix;
+    const commands = [...userContext];
+
+    try {
+      console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+      const data = (await this.rest.put(Routes.applicationGuildCommands(this.application.id, guildId), {
+        body: commands,
+      })) as unknown[];
+
+      console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

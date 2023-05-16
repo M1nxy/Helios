@@ -13,6 +13,7 @@
   "author": "M1nx<m1nxy.dev@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "canvas": "^2.11.2",
     "discord.js": "^14.11.0",
     "glob": "^10.2.3",
     "safer-dotenv": "^1.0.0"
