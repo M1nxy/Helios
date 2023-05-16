@@ -1,0 +1,10 @@
+.env
+.idea
+.vscode
+
+dist
+node_modules
+
+package.lock
+pnpm-lock.yaml
+yarn.lock
