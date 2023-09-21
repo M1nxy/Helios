@@ -24,8 +24,6 @@ export default new UserContextMenuCommand({
       const user = await member.user.fetch();
       const banner = user.bannerURL();
 
-      console.log(interaction.user.tag);
-
       const embed = new RandomEmbed({
         title: member.displayName,
         description: userMention(user.id),
