@@ -1,5 +1,5 @@
 import { globSync } from 'glob';
-import { Event } from '../types/event.js';
+import { Event } from '../lib/types/event.js';
 
 export const loadEvents = async (): Promise<Map<string, Event>> => {
   const evs = globSync('./src/events/**/**.ts', {

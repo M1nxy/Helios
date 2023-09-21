@@ -1,6 +1,8 @@
-import { Event } from '../../types/event.js';
+import { Event } from '$lib/types/event.js';
+import { scamCheck } from '$lib/scamcheck.js';
 
 export default new Event('messageCreate', false, async (helios, message) => {
+  if (scamCheck(message)) return;
   if (!message.content.startsWith(helios.prefix)) return;
   const args = message.content.substring(helios.prefix.length).split(' ');
   const cmd = args.shift();

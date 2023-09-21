@@ -1,5 +1,5 @@
 import { globSync } from 'glob';
-import { UserContextMenuCommand, TextCommand } from '../types/command.js';
+import { UserContextMenuCommand, TextCommand } from '../lib/types/command.js';
 
 const loadCommands = async <T>(path: string): Promise<Map<string, T>> => {
   const cmds = globSync(path).map(async (_path) => {

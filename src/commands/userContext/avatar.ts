@@ -1,10 +1,10 @@
-import { UserContextMenuCommand } from '../../types/command.js';
-import { RandomEmbed } from '../../types/embed.js';
+import { UserContextMenuCommand } from '$lib/types/command.js';
+import { RandomEmbed } from '$lib/types/embed.js';
 import { GuildMember } from 'discord.js';
 
 export default new UserContextMenuCommand({
   name: 'Steal Avatar',
-  desc: 'Get a link to a user\'s profile picture!',
+  desc: "Get a link to a user's profile picture!",
   execute: async (helios, interaction) => {
     await interaction.deferReply({ ephemeral: true });
     const member = interaction.targetMember as GuildMember;
@@ -14,11 +14,11 @@ export default new UserContextMenuCommand({
         title: `${member.displayName}'s Profile`,
         url: member.displayAvatarURL(),
         image: {
-          url: member.displayAvatarURL()
-        }
+          url: member.displayAvatarURL(),
+        },
       });
       await interaction.followUp({
-        embeds: [embed]
+        embeds: [embed],
       });
     } else {
       await interaction.followUp('Something went wrong!');

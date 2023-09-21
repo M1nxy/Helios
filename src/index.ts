@@ -1,8 +1,8 @@
 import config from 'safer-dotenv';
-import { Helios } from './types/client.js';
 import { ActivityType } from 'discord.js';
-import { loadTextCommands, loadUserContextCommand } from './commands/index.js';
-import { loadEvents } from './events/index.js';
+import { Helios } from '$lib/types/client';
+import { loadEvents } from './events/index';
+import { loadTextCommands, loadUserContextCommand } from './commands/index';
 
 const env = config<{ TOKEN: string }>();
 const client = new Helios({
@@ -11,20 +11,22 @@ const client = new Helios({
   presence: {
     activities: [
       {
-        name: 'beans',
-        type: ActivityType.Listening,
+        name: 'for scams',
+        type: ActivityType.Watching,
       },
     ],
   },
 });
 
-client.commands = await loadTextCommands();
-client.userContext = await loadUserContextCommand();
-client.events = await loadEvents();
+async function main() {
+  client.commands = await loadTextCommands();
+  client.userContext = await loadUserContextCommand();
+  client.events = await loadEvents();
 
-client.bindEvents();
+  client.prefix = 'h!';
+  client.bindEvents();
 
-client.prefix = 'h!';
-
-await client.login(env.TOKEN);
-await client.deployCommands('866087438077132850');
+  await client.login(env.TOKEN);
+  await client.deployCommands('866087438077132850');
+}
+main();

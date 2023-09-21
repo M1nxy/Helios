@@ -1,5 +1,5 @@
-import { UserContextMenuCommand } from '../../types/command.js';
-import { RandomEmbed } from '../../types/embed.js';
+import { UserContextMenuCommand } from '$lib/types/command.js';
+import { RandomEmbed } from '$lib/types/embed.js';
 import { GuildMember, userMention, roleMention, time, AttachmentBuilder, inlineCode } from 'discord.js';
 import { createCanvas } from 'canvas';
 
