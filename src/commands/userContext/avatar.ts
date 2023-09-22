@@ -1,11 +1,11 @@
-import { UserContextMenuCommand } from '$lib/types/command.js';
-import { RandomEmbed } from '$lib/types/embed.js';
+import { UserContextMenuCommand } from '../../lib/types/command.js';
+import { RandomEmbed } from '../../lib/types/embed.js';
 import { GuildMember } from 'discord.js';
 
 export default new UserContextMenuCommand({
   name: 'Steal Avatar',
   desc: "Get a link to a user's profile picture!",
-  execute: async (helios, interaction) => {
+  execute: async (_, interaction) => {
     await interaction.deferReply({ ephemeral: true });
     const member = interaction.targetMember as GuildMember;
 

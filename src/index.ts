@@ -1,8 +1,8 @@
 import config from 'safer-dotenv';
 import { ActivityType } from 'discord.js';
-import { Helios } from '$lib/types/client';
-import { loadEvents } from './events/index';
-import { loadTextCommands, loadUserContextCommand } from './commands/index';
+import { Helios } from './lib/types/client.js';
+import { loadEvents } from './events/index.js';
+import { loadTextCommands, loadUserContextCommand } from './commands/index.js';
 
 const env = config<{ TOKEN: string }>();
 const client = new Helios({

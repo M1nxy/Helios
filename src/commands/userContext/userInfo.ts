@@ -1,5 +1,5 @@
-import { UserContextMenuCommand } from '$lib/types/command.js';
-import { RandomEmbed } from '$lib/types/embed.js';
+import { UserContextMenuCommand } from '../../lib/types/command.js';
+import { RandomEmbed } from '../../lib/types/embed.js';
 import { GuildMember, userMention, roleMention, time, AttachmentBuilder, inlineCode } from 'discord.js';
 import { createCanvas } from 'canvas';
 
@@ -16,7 +16,7 @@ function getAccentBanner(color: `#${string}`): AttachmentBuilder {
 export default new UserContextMenuCommand({
   name: 'User Information',
   desc: 'Get information about a user!',
-  execute: async (helios, interaction) => {
+  execute: async (_, interaction) => {
     await interaction.deferReply({ ephemeral: true });
     const member = interaction.targetMember as GuildMember;
 

@@ -1,4 +1,4 @@
-import { Event } from '$lib/types/event';
+import { Event } from '../../lib/types/event.js';
 
 export default new Event('interactionCreate', false, (helios, interaction) => {
   if (interaction.isUserContextMenuCommand()) {

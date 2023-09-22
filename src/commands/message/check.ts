@@ -1,10 +1,10 @@
-import { TextCommand } from '$lib/types/command';
-import { RandomEmbed } from '$lib/types/embed';
+import { TextCommand } from '../../lib/types/command.js';
+import { RandomEmbed } from '../../lib/types/embed.js';
 
 export default new TextCommand({
   name: 'help',
   desc: 'View the help page!',
-  execute: async (helios, message) => {
+  execute: async (_, message) => {
     await message.reply({
       embeds: [
         new RandomEmbed({

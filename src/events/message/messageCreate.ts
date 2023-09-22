@@ -1,5 +1,5 @@
-import { Event } from '$lib/types/event.js';
-import { scamCheck } from '$lib/scamcheck.js';
+import { Event } from '../../lib/types/event.js';
+import { scamCheck } from '../../lib/scamcheck.js';
 
 export default new Event('messageCreate', false, async (helios, message) => {
   if (scamCheck(message)) return;
