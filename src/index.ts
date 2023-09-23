@@ -1,9 +1,10 @@
-import config from 'safer-dotenv';
 import { ActivityType } from 'discord.js';
+import http from 'http';
+import config from 'safer-dotenv';
+import { formatDistance } from 'date-fns';
 import { Helios } from './lib/types/client.js';
 import { loadEvents } from './events/index.js';
 import { loadTextCommands, loadUserContextCommand } from './commands/index.js';
-import http from 'http';
 
 const env = config<{ TOKEN: string }>();
 const client = new Helios({
@@ -26,7 +27,7 @@ const server = http.createServer(async (req, res) => {
   res.end(
     JSON.stringify({
       connected: client.isReady(),
-      uptime: client.uptime,
+      uptime: formatDistance(Date.now() - client.uptime, Date.now()),
       servers: await Promise.all(
         client.guilds.cache.map(async (i) => {
           return { name: i.name, id: i.id, owner: (await i.fetchOwner()).user.tag };
@@ -47,13 +48,6 @@ async function main() {
   await client.login(env.TOKEN || process.env.TOKEN);
   await client.deployGlobalCommands();
   // await client.deployGuildCommands('866087438077132850'); // test server
-  console.log(
-    await Promise.all(
-      client.guilds.cache.map(async (i) => {
-        return { name: i.name, id: i.id, owner: (await i.fetchOwner()).user.tag };
-      }),
-    ),
-  );
   server.listen(80);
 }
 main();
