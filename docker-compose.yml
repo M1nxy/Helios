@@ -3,8 +3,8 @@
 version: '3'
 services:
   helios:
-    container_name: "helios"
-    image: "ghcr.io/m1nxy/helios:latest"
+    container_name: helios
+    image: ghcr.io/m1nxy/helios:latest
     build: .
     command: npm run prod
     restart: unless-stopped
