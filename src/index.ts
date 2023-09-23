@@ -26,7 +26,9 @@ async function main() {
   client.prefix = 'h!';
   client.bindEvents();
 
-  await client.login(env.TOKEN);
-  await client.deployCommands('866087438077132850');
+  console.log(env)
+
+  await client.login(env.TOKEN || process.env.TOKEN);
+  await client.deployCommands('866087438077132850'); // the test server
 }
 main();

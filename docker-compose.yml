@@ -1,0 +1,7 @@
+version: '2'
+services:
+  helios:
+    build: .
+    command: npm run prod
+    env_file:
+      - .env
