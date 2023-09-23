@@ -10,7 +10,6 @@ export const loadEvents = async (): Promise<Map<string, Event>> => {
   .filter(i => !i.endsWith(".d.ts") && !i.endsWith("index.js") && !i.endsWith("index.ts"))
   .map(async (_path) => {
     const event = await import(_path);
-    console.log(event)
     return [event.default.name, event.default];
   }) as Array<Promise<[string, Event]>>;
   const events = await Promise.all(evs);

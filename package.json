@@ -5,10 +5,11 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "docker build . -t ghcr.io/m1nxy/helios",
+    "publish": "docker push ghcr.io/m1nxy/helios:latest",
     "prod": "node ./dist/index.js",
-    "dev": "tsx ./src/index.ts",
-    "watch": "tsx watch ./src/index.ts",
+    "dev": "tsx watch ./src/index.ts",
+    "healthcheck": "node ./dist/healthcheck.js",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix"
   },

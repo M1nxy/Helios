@@ -3,6 +3,7 @@ import { ActivityType } from 'discord.js';
 import { Helios } from './lib/types/client.js';
 import { loadEvents } from './events/index.js';
 import { loadTextCommands, loadUserContextCommand } from './commands/index.js';
+import http from 'http';
 
 const env = config<{ TOKEN: string }>();
 const client = new Helios({
@@ -18,6 +19,16 @@ const client = new Helios({
   },
 });
 
+// Healthcheck
+const server = http.createServer((req, res) => {
+  const status = client.isReady() ? 200 : 503;
+  res.writeHead(status, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({
+    connected: client.isReady(),
+    uptime: client.uptime
+  }));
+});
+
 async function main() {
   client.commands = await loadTextCommands();
   client.userContext = await loadUserContextCommand();
@@ -26,9 +37,8 @@ async function main() {
   client.prefix = 'h!';
   client.bindEvents();
 
-  console.log(env)
-
   await client.login(env.TOKEN || process.env.TOKEN);
   await client.deployCommands('866087438077132850'); // the test server
+  server.listen(80);
 }
 main();

@@ -1,6 +1,6 @@
 import { globSync } from 'glob';
 import { UserContextMenuCommand, TextCommand } from '../lib/types/command.js';
-import { resolve, dirname } from 'path';
+import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 

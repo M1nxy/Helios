@@ -1,7 +1,19 @@
-version: '2'
+# Example compose file
+
+version: '3'
 services:
   helios:
+    container_name: "helios"
+    image: "ghcr.io/m1nxy/helios:latest"
     build: .
     command: npm run prod
+    ports:
+      - 6080:80
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "npm", "run", "healthcheck"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
