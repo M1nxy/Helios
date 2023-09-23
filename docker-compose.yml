@@ -7,10 +7,11 @@ services:
     image: "ghcr.io/m1nxy/helios:latest"
     build: .
     command: npm run prod
+    # optional
     ports:
       - 6080:80
     env_file:
-      - .env
+      - stack.env
     healthcheck:
       test: ["CMD", "npm", "run", "healthcheck"]
       interval: 30s

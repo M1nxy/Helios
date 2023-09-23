@@ -20,13 +20,20 @@ const client = new Helios({
 });
 
 // Healthcheck
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const status = client.isReady() ? 200 : 503;
   res.writeHead(status, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({
-    connected: client.isReady(),
-    uptime: client.uptime
-  }));
+  res.end(
+    JSON.stringify({
+      connected: client.isReady(),
+      uptime: client.uptime,
+      servers: await Promise.all(
+        client.guilds.cache.map(async (i) => {
+          return { name: i.name, id: i.id, owner: (await i.fetchOwner()).user.tag };
+        }),
+      ),
+    }),
+  );
 });
 
 async function main() {
@@ -38,7 +45,15 @@ async function main() {
   client.bindEvents();
 
   await client.login(env.TOKEN || process.env.TOKEN);
-  await client.deployCommands('866087438077132850'); // the test server
+  await client.deployGlobalCommands();
+  // await client.deployGuildCommands('866087438077132850'); // test server
+  console.log(
+    await Promise.all(
+      client.guilds.cache.map(async (i) => {
+        return { name: i.name, id: i.id, owner: (await i.fetchOwner()).user.tag };
+      }),
+    ),
+  );
   server.listen(80);
 }
 main();
